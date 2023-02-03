@@ -7,65 +7,126 @@ import warnings
 warnings.filterwarnings('ignore')
 import re
 import perfcounters
-from utils import GetDataFromChartink, send_telegram
+from utils import GetDataFromChartink, send_telegram, send_telegram_img
+import datetime as dt
+import dataframe_image
 
 
 
 app = Flask(__name__)
-urls = ['https://chartink.com/screener/potential-movers-2','https://chartink.com/screener/bullish-engulfing-pattern-25122702','https://chartink.com/screener/morning-star-candlestick-pattern-423','https://chartink.com/screener/evening-star-2540','https://chartink.com/screener/bearish-engulfing-pattern-209']
-patterns = ["Potential Movers", "Bullish Engulfing", "Morning Star", "Evening Star", "Bearish Engulfing"]
 
-@app.route("/", methods=["GET"])
+@app.route('/')
+def index():
+    return render_template('base.html')
+
+@app.route("/test", methods=["GET"])
 def scrape(): 
     
     scr = perfcounters.PerfCounters()
     scr.start('scrape') 
     dataframes = {}
-    count = 0
-    for url in urls:
+    
+    queries = config.eod_queries.items()
+    i=1
+    for key, val in queries:
       #st = get_stocks(url,driver)
-      st = GetDataFromChartink(url)
-      
-
-      # split the string by '/'
-      parts = url.split('/')
-
-      # get the last part of the split string, which is 'potential-movers-2'
-      last_part = parts[-1]
-
-      # split the last part by '-'
-      parts = last_part.split('-')
-
-      # remove the last part, which is the number '2'
-      parts.pop()
-
-      # join the parts with ' '
-      result = ' '.join(parts)
-
-      # convert to title case
-      result = result.title()
-      if len(st) <=1:
-        send_telegram(result + "\n No stocks found")
-      else:
-        send_telegram(result)
+      data = GetDataFromChartink(val)    
+      send_telegram(key + "\n")
         
       
-      if (st.empty == False) and len(st)>1:
+      if (data.empty == False) and len(data)>1:
+         
           
-          df =pd.DataFrame(st,columns=['Sr.no','Name','Symbol','Links','%CH','Price','Vol'])
-          send_telegram(df['Symbol'].to_string(index=False))
-                   
-          feature = ['Name','Symbol','%CH','Price']
-          df = df[feature]
-          dataframes[result] = df
+          #print(data)
+          data = data.sort_values(by='per_chg',ascending=False)
+          data.drop(columns='sr',inplace=True)
+          #data["timestap"] = dt.datetime().now().strftime('%H:%M:%S')
+          df_styled = data.style.background_gradient()  
+          dataframe_image.export(df_styled, f'{i}.png')
+          dataframes[key] = data                
+          send_telegram_img(f'{i}.png')
+          i += 1
+          
+        
           #df = df.assign(Label=result)          
           
         
     scr.stop('scrape')
     scr.report()
+  
+      
+    return render_template('index.html', dt = dt.datetime.now().strftime("%d-%m-%Y"), dict = dataframes)
+  
+  
+@app.route('/bullrun')
+def intraday():
+    now = dt.datetime.now().time()
+    time_string = now.strftime("%H:%M:%S")
+
     
-    return render_template('index.html',pattern_list = patterns,my_dict=dataframes)   
+    queries = config.bullrun
+    print(queries.items())
+    dataframes = {}
+    for key, value in queries.items():
+        data = GetDataFromChartink(value)
+        #print(data)
+        if (data.empty == False) and len(data)>0:
+          
+          #print(data)
+          data = data.sort_values(by='per_chg',ascending=False)
+          data.drop(columns=['sr', 'bsecode', "name", 'volume'],inplace=True)
+          data["Time"]= time_string
+          data.keys().append("Symbol")
+         
+          dataframes[key] = data
+    return(render_template('intraday.html', dict = dataframes))  
+
+
+@app.route('/bulle')
+def bulle():
+    now = dt.datetime.now().time()
+    time_string = now.strftime("%H:%M:%S")
+
+
+    queries = config.bullEng
+    #print(queries.items())
+    dataframes = {}
+    for key, value in queries.items():
+        data = GetDataFromChartink(value)
+        
+    if (data.empty == False) and len(data)>0:
+        
+        #print(data)
+        data = data.sort_values(by='per_chg',ascending=False)
+        data.drop(columns=['sr', 'bsecode', "name", 'volume'],inplace=True)
+        data["Time"]= time_string
+        
+        dataframes[key] = data
+    return(render_template('intraday.html', dict = dataframes))      
+
+
+@app.route('/beare')
+def beare():
+    now = dt.datetime.now().time()
+    time_string = now.strftime("%H:%M:%S")
+
     
+    queries = config.bearEng
+    print(queries.items())
+    dataframes = {}
+    for key, value in queries.items():
+        data = GetDataFromChartink(value)
+        print(data)
+        if (data.empty == False) and len(data)>0:
+          
+          #print(data)
+          data = data.sort_values(by='per_chg',ascending=False)
+          data.drop(columns=['sr', 'bsecode', "name", 'volume'],inplace=True)
+          data["Time"]= time_string
+         
+          dataframes[key] = data
+    return(render_template('intraday.html', dict = dataframes))  
+
 
 if __name__ == "__main__":
     app.run()

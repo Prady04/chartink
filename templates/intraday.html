@@ -1,0 +1,44 @@
+
+
+  
+
+  <div class="container-lg">
+   
+    <table class ="table table-responsive" >
+      
+      {% for key, value in dict.items() %}
+        <tr>
+          <th>Scan {{ key }}</th>
+          <td>
+            <table class = "table table-warning table-striped">
+              <thead>
+                <tr>
+                  {% for column in value.columns %}
+                    <th>{{ column }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in value.to_dict(orient='records') %}
+                
+                  <tr>
+                     <td><a href="https://in.tradingview.com/chart/ONnfTdXs/?symbol={{ row['nsecode']}}" target="_blank">{{ row['nsecode']}}</a>
+                     </td>
+                    {% for item in row.values() %}
+                        
+                      <td class="mx-auto">{{ item }}</td>
+                    {% endfor %}
+                    <td class = "mx-auto">
+
+                      
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      {% endfor %}
+      </table>
+      
+  </div>

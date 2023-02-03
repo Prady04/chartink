@@ -24,7 +24,7 @@ Charting_url = 'https://chartink.com/screener/process'
 
 #You need to copy paste condition in below mentioned Condition variable
 
-conditions = {"bullrun":"( {-1} ( [0] 5 minute close > 1 day ago high and latest low > 1 day ago close and latest open > 1 day ago close and latest volume > latest sma ( latest volume , 20 ) * 1.2 and 1 day ago open > 1 day ago close and 1 day ago close > 1 day ago low * 0.95 and latest volume > 100000 ) )  ", "bullEng": "( {cash} ( [-1] 15 minute close > [-1] 15 minute open and [-2] 15 minute open > [-2] 15 minute close and [-1] 15 minute open < [-2] 15 minute close and [-1] 15 minute close > [-2] 15 minute open and latest volume > 50000 and [0] 15 minute high > [-1] 15 minute high ) )  " }
+conditions = {"bullrun":"( {-1} ( [0] 5 minute close > 1 day ago high and latest low > 1 day ago close and latest open > 1 day ago close and latest volume > latest sma ( latest volume , 20 ) * 1.2 and 1 day ago open > 1 day ago close and 1 day ago close > 1 day ago low * 0.95 and latest volume > 100000 ) )  ", "bullEng": "( {33489} ( [-1] 15 minute close > [-1] 15 minute open and [-2] 15 minute open > [-2] 15 minute close and [-1] 15 minute open < [-2] 15 minute close and [-1] 15 minute close > [-2] 15 minute open and latest volume > 50000 ) )   ","beareng":"( {33489} ( [-1] 15 minute close < [-1] 15 minute open and [-2] 15 minute open < [-2] 15 minute close and [-1] 15 minute open > [-2] 15 minute close and [-1] 15 minute close < [-2] 15 minute open and latest volume > 50000 ) ) " } 
 
 sleeptime = 60
 
@@ -50,13 +50,15 @@ stocks = None
 while True:
     
     for name, condition in conditions.items():
-    
+      print(name)
       data = utils.GetDataFromChartink(condition)
-      if (data.empty):
+      if (data.empty ):
+        print("nothing found...")
+      if (len(data) <=1 ):
         print("nothing found...")
       else:        
         data = data.sort_values(by='per_chg',ascending=False)
-        prettify(data, clear_console=True) #print(f"\n\n{data}")
+        prettify(data, clear_console=False) #print(f"\n\n{data}")
         print(name)
         winsound.Beep(440, 500)
         
@@ -69,6 +71,8 @@ while True:
             result.range('a1').options(index=False).value = data
         except Exception as e:
           pass
-      print(f'scanning again in {sleeptime * 7/60} minutes')
-    sleep(sleeptime *7)
+      print(f'scanning again in {sleeptime * 8/60} minutes')
+    import datetime
+    print(datetime.datetime.now())
+    sleep(sleeptime *8)
         
