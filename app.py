@@ -17,47 +17,60 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('base.html')
+    return render_template('main.html')
 
-@app.route("/test", methods=["GET"])
+@app.route("/eod", methods=["GET"])
 def scrape(): 
     
     scr = perfcounters.PerfCounters()
     scr.start('scrape') 
     dataframes = {}
+    stocks = []
     
     queries = config.eod_queries.items()
     i=1
     for key, val in queries:
       #st = get_stocks(url,driver)
-      data = GetDataFromChartink(val)    
-      send_telegram(key + "\n")
+        data = GetDataFromChartink(val)    
+        send_telegram(key + "\n")
         
       
-      if (data.empty == False) and len(data)>1:
+        if (data.empty == False) and len(data)>1:
          
           
           #print(data)
-          data = data.sort_values(by='per_chg',ascending=False)
-          data.drop(columns='sr',inplace=True)
-          #data["timestap"] = dt.datetime().now().strftime('%H:%M:%S')
-          df_styled = data.style.background_gradient()  
-          dataframe_image.export(df_styled, f'{i}.png')
-          dataframes[key] = data                
-          send_telegram_img(f'{i}.png')
-          i += 1
-          
-        
-          #df = df.assign(Label=result)          
+            
+            data.drop(columns=['sr','name','bsecode'],inplace=True)
+            data.rename(columns= {"nsecode":"symbol"},inplace=True)
+            
+            #data["timestap"] = dt.datetime().now().strftime('%H:%M:%S')
+            #data = data.style.background_gradient()  
+            #dataframe_image.export(data, f'C:\\temp\\{key}.png')
+            stocks.append(data['symbol'].to_string())
+            #data['symbol']= f'<a href="https://in.tradingview.com/chart/ONnfTdXs/?symbol={ym}&target="_blank"" >{ym}</a></td>'
+            send_telegram(data['symbol'].to_string())
+            dataframes[key] = data 
+            
           
         
     scr.stop('scrape')
     scr.report()
   
       
-    return render_template('index.html', dt = dt.datetime.now().strftime("%d-%m-%Y"), dict = dataframes)
-  
-  
+    return render_template('index.html', dt = dt.datetime.now().strftime("%d-%m-%Y"), dict = dataframes,stocks=stocks)
+
+def processdata(queries):
+    for key, value in queries.items():
+        data = GetDataFromChartink(value)
+        #print(data)
+        if (data.empty == False) and len(data)>0:          
+          #print(data)
+          data = data.sort_values(by='per_chg',ascending=False)
+          data.drop(columns=['sr', 'bsecode', "name", 'volume'],inplace=True)        
+        
+    return(key, data)
+      
+
 @app.route('/bullrun')
 def intraday():
     now = dt.datetime.now().time()
@@ -65,67 +78,39 @@ def intraday():
 
     
     queries = config.bullrun
+    stocks = pd.DataFrame()
     print(queries.items())
-    dataframes = {}
-    for key, value in queries.items():
-        data = GetDataFromChartink(value)
-        #print(data)
-        if (data.empty == False) and len(data)>0:
-          
-          #print(data)
-          data = data.sort_values(by='per_chg',ascending=False)
-          data.drop(columns=['sr', 'bsecode', "name", 'volume'],inplace=True)
-          data["Time"]= time_string
-          data.keys().append("Symbol")
+    key, stocks = processdata(queries)
+                    
          
-          dataframes[key] = data
-    return(render_template('intraday.html', dict = dataframes))  
+    return(render_template('intraday.html', pattern = key, stocks = stocks))  
 
 
 @app.route('/bulle')
 def bulle():
     now = dt.datetime.now().time()
-    time_string = now.strftime("%H:%M:%S")
+    
 
-
+    
     queries = config.bullEng
-    #print(queries.items())
-    dataframes = {}
-    for key, value in queries.items():
-        data = GetDataFromChartink(value)
-        
-    if (data.empty == False) and len(data)>0:
-        
-        #print(data)
-        data = data.sort_values(by='per_chg',ascending=False)
-        data.drop(columns=['sr', 'bsecode', "name", 'volume'],inplace=True)
-        data["Time"]= time_string
-        
-        dataframes[key] = data
-    return(render_template('intraday.html', dict = dataframes))      
+    stocks = pd.DataFrame()    
+    key, stocks = processdata(queries)
+    print(stocks)
+                    
+         
+    return(render_template('intraday.html', pattern = key, stocks = stocks))     
 
 
 @app.route('/beare')
 def beare():
     now = dt.datetime.now().time()
-    time_string = now.strftime("%H:%M:%S")
-
-    
     queries = config.bearEng
+    stocks = pd.DataFrame()
     print(queries.items())
-    dataframes = {}
-    for key, value in queries.items():
-        data = GetDataFromChartink(value)
-        print(data)
-        if (data.empty == False) and len(data)>0:
-          
-          #print(data)
-          data = data.sort_values(by='per_chg',ascending=False)
-          data.drop(columns=['sr', 'bsecode', "name", 'volume'],inplace=True)
-          data["Time"]= time_string
+    key, stocks = processdata(queries)
+    print(stocks)               
          
-          dataframes[key] = data
-    return(render_template('intraday.html', dict = dataframes))  
+    return(render_template('intraday.html', pattern = key, stocks = stocks))  
 
 
 if __name__ == "__main__":

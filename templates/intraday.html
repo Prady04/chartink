@@ -1,44 +1,29 @@
 
 
-  
+    <div class="container">
+      <h1 class="text-center mt-3 mb-3 text-warning">{{ pattern }}</h1>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Stock Name</th>
+            <th>CMP </th>
+            <th>%change</th>
+            <!-- Add headers for other attributes -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for index, row in stocks.iterrows() %}
+          <tr>
+            <td><a href="https://in.tradingview.com/chart/ONnfTdXs/?symbol={{ row['nsecode'] }}&target="_blank"" >{{ row['nsecode'] }}</a></td>
+            <td>{{ row['close'] }}</td>
+            <td>{{ row['per_chg'] }}</td>
+            
 
-  <div class="container-lg">
-   
-    <table class ="table table-responsive" >
-      
-      {% for key, value in dict.items() %}
-        <tr>
-          <th>Scan {{ key }}</th>
-          <td>
-            <table class = "table table-warning table-striped">
-              <thead>
-                <tr>
-                  {% for column in value.columns %}
-                    <th>{{ column }}</th>
-                  {% endfor %}
-                </tr>
-              </thead>
-              <tbody>
-                {% for row in value.to_dict(orient='records') %}
-                
-                  <tr>
-                     <td><a href="https://in.tradingview.com/chart/ONnfTdXs/?symbol={{ row['nsecode']}}" target="_blank">{{ row['nsecode']}}</a>
-                     </td>
-                    {% for item in row.values() %}
-                        
-                      <td class="mx-auto">{{ item }}</td>
-                    {% endfor %}
-                    <td class = "mx-auto">
-
-                      
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      {% endfor %}
+           
+            <!-- Add data for other attributes -->
+          </tr>
+          {% endfor %}
+        </tbody>
       </table>
-      
-  </div>
+    </div>
+ 

@@ -28,6 +28,20 @@ color: white;
 }
 
 th {
-  color:rgb(50, 20, 241);
+  color:rgb(8, 8, 8);
   font-weight: bold;
+  background-color: white;
+  font-size:1.4em;
+}
+
+.child1 th {
+  background-color:greenyellow;  
+}
+
+.child2 th{
+  background-color: red;
+}
+
+a {
+  color:white;
 }
