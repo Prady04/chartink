@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, redirect, render_template
 import requests
-from bs4 import BeautifulSoup
+
 import config
 import pandas as pd 
 import warnings
@@ -9,22 +9,12 @@ import re
 import perfcounters
 from utils import GetDataFromChartink, send_telegram, send_telegram_img
 import datetime as dt
-import dataframe_image
-import pdfkit    
+  
 
 app = Flask(__name__)
 
 
-def createpdf(data):
-    path ='./report.csv'
-    path1 = './report.pdf'
-    
-    try: 
-        data.to_csv(path)
-        print(pdfkit.from_file(path,path1,configuration=pdfkit.configuration(wkhtmltopdf='./bin/wkhtmltopdf.exe')))
-    except Exception as e:
-        print(e)
-        pass
+
     
     
 @app.route('/')
