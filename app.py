@@ -10,11 +10,23 @@ import perfcounters
 from utils import GetDataFromChartink, send_telegram, send_telegram_img
 import datetime as dt
 import dataframe_image
-
-
+import pdfkit    
 
 app = Flask(__name__)
 
+
+def createpdf(data):
+    path ='./report.csv'
+    path1 = './report.pdf'
+    
+    try: 
+        data.to_csv(path)
+        print(pdfkit.from_file(path,path1,configuration=pdfkit.configuration(wkhtmltopdf='./bin/wkhtmltopdf.exe')))
+    except Exception as e:
+        print(e)
+        pass
+    
+    
 @app.route('/')
 def index():
     return render_template('main.html')
@@ -55,7 +67,7 @@ def scrape():
         
     scr.stop('scrape')
     scr.report()
-  
+    
       
     return render_template('index.html', dt = dt.datetime.now().strftime("%d-%m-%Y"), dict = dataframes,stocks=stocks)
 
@@ -107,10 +119,32 @@ def beare():
     queries = config.bearEng
     stocks = pd.DataFrame()
     print(queries.items())
-    key, stocks = processdata(queries)
+    try:
+        key, stocks = processdata(queries)
+    except Exception as e:
+        pass
     print(stocks)               
          
     return(render_template('intraday.html', pattern = key, stocks = stocks))  
+
+@app.route('/new')
+def new(): 
+    print("in new")
+    queries = config.new
+    stocks = pd.DataFrame()
+    key = ""
+    
+    
+    #stocks.sort_values(by=['per_chng'], inplace=True)
+    print(queries.items())
+    try:
+        key, stocks = processdata(queries)
+    except Exception as e:
+        pass
+    print(stocks)               
+         
+    return(render_template('new.html',pattern = key, stocks = stocks)) 
+    
 
 
 if __name__ == "__main__":
