@@ -9,8 +9,8 @@ import re
 import perfcounters
 from utils import GetDataFromChartink, send_telegram, send_telegram_img
 import datetime as dt
-from bhavutils import process_bhav 
-from amiutils import import_data 
+#from bhavutils import process_bhav 
+#from amiutils import import_data 
   
 
 app = Flask(__name__)
