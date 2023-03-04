@@ -20,5 +20,7 @@ bullEng = {"Engulfing Bull": "( {33489} ( [0] 15 minute close >  [0] 15 minute o
 
 bearEng = {"Engulfing Bear":"( {33489} ( [0] 15 minute close < [0] 15 minute open and [-1] 15 minute open < [-1] 15 minute close and  [0] 15 minute open > [-1] 15 minute close and [0] 15 minute close < [-1] 15 minute open and latest volume > 50000 ) ) " }
 
-new = {"Momentum Crackers":"( {cash} ( [=1] 5 minute open > 1 day ago close and 1 day ago open < 2 days ago close and latest high >= 0.9 * 1 day ago high and market cap < 8000 and latest volume > 50000 and latest close > 1 day ago close and latest close > 30 and latest close - 1 candle ago close / 1 candle ago close * 100 > 2  ))" } 
+new = {"Momentum Crackers":"( {cash} ( [=1] 5 minute open > 1 day ago close and 1 day ago open < 2 days ago close and latest high >= 0.9 * 1 day ago high and market cap < 8000 and latest volume > 50000 and latest close > 1 day ago close and latest close > 30 and latest close - 1 candle ago close / 1 candle ago close * 100 > 2  ))" }
+
+new0 = {"Momentum Crackers not working":"( {-1} ( [=1] 5 minute open > 1 day ago close and 1 day ago close < 1 day ago open and 1 day ago open < 2 days ago close and latest high >= 0.9 * 1 day ago high and market cap < 8000 and latest volume > 50000 and latest close > 1 day ago close and latest close > 30 and latest close - 1 candle ago close / 1 candle ago close * 100 > 2 ) ) "}
 

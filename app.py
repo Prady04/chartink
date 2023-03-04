@@ -9,6 +9,8 @@ import re
 import perfcounters
 from utils import GetDataFromChartink, send_telegram, send_telegram_img
 import datetime as dt
+from bhavutils import process_bhav 
+from amiutils import import_data 
   
 
 app = Flask(__name__)
@@ -134,8 +136,18 @@ def new():
     print(stocks)               
          
     return(render_template('new.html',pattern = key, stocks = stocks)) 
-    
-
+  
+@app.route('/bhav', methods=['GET','POST'])  
+def bhav():
+    if request.method=='POST':
+        print(request.form.items())
+        start_date = request.form.get('startdate')
+        end_date = request.form['enddate']
+        process_bhav(start_date, end_date)
+        import_data()
+        return "Data imported to AmiBroker"
+    if request.method=="GET":
+        return(render_template('dlbhav.html'))
 
 if __name__ == "__main__":
     app.run()
