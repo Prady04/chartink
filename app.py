@@ -136,7 +136,7 @@ def new():
     print(stocks)               
          
     return(render_template('new.html',pattern = key, stocks = stocks)) 
-  
+''' 
 @app.route('/bhav', methods=['GET','POST'])  
 def bhav():
     if request.method=='POST':
@@ -148,6 +148,6 @@ def bhav():
         return "Data imported to AmiBroker"
     if request.method=="GET":
         return(render_template('dlbhav.html'))
-
+'''
 if __name__ == "__main__":
     app.run()

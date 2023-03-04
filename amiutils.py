@@ -1,4 +1,5 @@
-import os
+
+'''import os
 import win32com.client
 import pythoncom
 import glob
@@ -45,3 +46,4 @@ def import_data():
         ab.RefreshAll()
         ab.Quit()
         print("Done..")
+'''

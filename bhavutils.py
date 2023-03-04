@@ -1,4 +1,4 @@
-from zipfile import ZipFile
+'''from zipfile import ZipFile
 from io import BytesIO
 import requests
 import time
@@ -79,6 +79,6 @@ def process_bhav(y, z):
       curDate+= datetime.timedelta(days=1)
     else:
       print('No Bhavcopy available for '+curDate.strftime("%d-%b-%Y"))
-    
+'''    
 
   
