@@ -3,3 +3,4 @@ __pycache__
 .vscode/launch.json
 Chartink_Result.xlsm
 static/assets/scss
+.vscode/settings.json

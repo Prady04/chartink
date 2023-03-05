@@ -1,28 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="refresh" content="300">
-  
+{% extends 'base.html' %}
 
-  <title>easypicks</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <!-- Favicon -->
-  <link href="{{ url_for('static',filename='assets/img/brand/favicon.png')}}" rel="icon" type="image/png">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-
-  <!-- Icons -->                 
-  <link href="{{ url_for('static' ,filename='assets/css/nucleo-icons.css')}}" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-
-  <!-- Material Kit-->
-  <link type="text/css" href="{{ url_for('static' ,filename='assets/css/material-kit.min.css')}}" rel="stylesheet">
-</head>
-<body>
+ {% block content %} 
   
   <div class="container">
     <h1 class="text-center mt-3 mb-3 text-warning">{{ pattern }}</h1>
@@ -38,7 +16,7 @@
       <tbody>
         {% for index, row in stocks.iterrows() %}
         <tr>
-          <td><a href="https://in.tradingview.com/chart/ONnfTdXs/?symbol={{ row['nsecode'] }}&target="_blank"" >{{ row['nsecode'] }}</a></td>
+          <td><a href="https://in.tradingview.com/chart/?symbol={{ row['nsecode'] }}"&target="_blank"  >{{ row['nsecode'] }}</a></td>
           <td>{{ row['close'] }}</td>
           <td>{{ row['per_chg'] }}</td>
           
@@ -50,11 +28,9 @@
       </tbody>
     </table>
   </div>
+  
   <div>
-    <p class="text-center mt-5 "> Click <span> <a href="#help"><i>here</i> </span> to understand how to trade these stocks</a></p>
-  </div>
-  <div>
-    <p id="dime" class = "text-dark text-center">Last updated at: <span id="time">time<span></p>
+    <p id="dime" class = "text-light text-center">Last updated at: <span id="time">time<span></p>
   </div>
   <script>
     async function gettime() {
@@ -65,7 +41,7 @@
     gettime()
   </script>
 
-  <section id="about" class="bg-light py-5">
+  <section id="about" class="bg-dark py-5">
     <div class="container">
         <div class="text-center py-5">
             <h2 class="fw-bolder border-bottom border-info border-3 d-inline-block pb-1" data-aos="zoom-in">
@@ -88,9 +64,9 @@
                     </h5>
                     <div class="accordion-collapse collapse" id="collapseOne">
                         <div class="accordion-body">
-                           <p>Plot 5, 8, 13 emas on your charting software in 5 minute timeframe. 
-                            Look to buy when stock reverses from any of the moving averages. 
-                            SL should be kept below all the 3 emas.
+                           <p class = "text-dark">Plot  8 emas on your charting software in 5 minute timeframe. 
+                            Look to buy when stock reverses from the moving averages. 
+                            SL should be kept below the ema and previous pivot low in 5 min tf.
                             Target price should be kept at 2 or 3 times risk. 
                             Alternatively you could use your own system as long as it has a clear SL identified. 
                         </div>
@@ -104,7 +80,7 @@
                         </button>
                     </h5>
                     <div class="accordion-collapse collapse" id="collapseTwo">
-                        <div class="accordion-body">
+                        <div class="accordion-body text-dark">
                             Leverage should not be used. 
                             Maximum of 5% of capital should be allocated to one trade. 
                             Follow this religiously. 
@@ -120,37 +96,4 @@
         </div>
     </div>
 </section>
-
-<footer class="bg-dark text-white">
-  <div class="container d-flex justify-content-between pt-3 pb-1">
-      <p>@All rights reserved</p>
-      <p>Designed by <a href="https://vcptrader.com" target="_blank" class="text-info text-decoration-none">Prady</a></p>
-  </div>
-</footer>
-  <!--   Core JS Files   -->
-  <script src="{{ url_for('static' ,filename='assets/js/core/popper.min.js')}}" type="text/javascript"></script>
-  <script src="{{ url_for('static' ,filename='assets/js/core/bootstrap.min.js')}}" type="text/javascript"></script>
-  <script src="{{ url_for('static' ,filename='assets/js/plugins/perfect-scrollbar.min.js')}}" type="text/javascript"></script>
-  <script src="{{ url_for('static' ,filename='assets/js/plugins/moment.min.js')}}"></script>
-
-
-  <!-- Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
- 
-
-  <!--  Plugin for the Carousel, full documentation here: http://jedrzejchalubek.com/  -->
-
-
-  <!--	Plugin for Select, full documentation here: https://joshuajohnson.co.uk/Choices/ -->
-  <script src="{{ url_for('static' ,filename='assets/js/plugins/choices.min.js')}}" type="text/javascript"></script>
-
-
-  <!--  Google Maps Plugin    -->
-  
-
-  <!-- Control Center for Material Kit parallax effects, scripts for the example pages etc -->
-  <script src="{{ url_for('static' ,filename='assets/js/material-kit.min.js')}}" type="text/javascript"></script>
-
- 
-
-  </body>
-</html>
+  {% endblock %}
