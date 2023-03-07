@@ -21,7 +21,7 @@ app = Flask(__name__)
     
 @app.route('/')
 def index():
-    return render_template('base.html')
+    return render_template('base.html', isindex=True)
 
 @app.route("/eod", methods=["GET"])
 def scrape(): 
@@ -61,7 +61,7 @@ def scrape():
     scr.report()
     
       
-    return render_template('index.html', dt = dt.datetime.now().strftime("%d-%m-%Y"), dict = dataframes,stocks=stocks)
+    return render_template('index.html', dt = dt.datetime.now().strftime("%d-%m-%Y"), dict = dataframes,stocks=stocks, isindex=False)
 
 def processdata(queries):
     for key, value in queries.items():
@@ -135,7 +135,11 @@ def new():
         pass
     print(stocks)               
          
-    return(render_template('new.html',pattern = key, stocks = stocks)) 
+    return(render_template('new.html',pattern = key, stocks = stocks, isindex=False)) 
+
+@app.route('/investment')
+def investment():        
+    return(render_template('investment.html',isindex=False))
 ''' 
 @app.route('/bhav', methods=['GET','POST'])  
 def bhav():
