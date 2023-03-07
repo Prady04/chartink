@@ -1,49 +1,42 @@
 {% extends 'dashboard.html' %}
 
  {% block content %} 
+  
   <div class="row"> 
     <div class="col">
       <div class="container">
-      <h1 class="text-center mt-3 mb-3 text-warning">{{ pattern }}</h1>
+      <h1 class="text-center mt-3 mb-3 text-warning">Swing Emperors</h1>
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
             <th>Stock Name</th>
-            <th>CMP </th>
-            <th>%change</th>
+            <th>Trade date </th>
+            <th>current SL</th>
             <!-- Add headers for other attributes -->
           </tr>
         </thead>
         <tbody>
-          {% for index, row in stocks.iterrows() %}
+         
           <tr>
-            <td><a href="https://in.tradingview.com/chart/?symbol={{ row['nsecode'] }}"&target="_blank"  >{{ row['nsecode'] }}</a></td>
-            <td>{{ row['close'] }}</td>
-            <td>{{ row['per_chg'] }}</td>
+            <td>TATAMTRDVR</td>
+            <td>08-MAR-2023</td>
+            <td>1%</td>
+            
             
 
           
             <!-- Add data for other attributes -->
           </tr>
-          {% endfor %}
+          
+          
         </tbody>
       </table>
       </div>
     </div>
    
   
-  <div>
-    <p id="dime" class = "text-light text-center">Last updated at: <span id="time">time<span></p>
-    <p> Next update in 5 minutes from now </p>
-  </div>
-  <script>
-    async function gettime() {
-      var d = new Date();
-        document.getElementById("time").innerHTML = d.toLocaleString();
-      }
-   
-    gettime()
-  </script>
+  <div> 
+  
 
   <section id="about" class="bg-dark py-5">
     <div class="container">
@@ -51,11 +44,7 @@
             <h2 class="fw-bolder border-bottom border-info border-3 d-inline-block pb-1" data-aos="zoom-in">
                 How to Trade 
             </h2>
-            <p class="fs-5 mt-3" data-aos="zoom-in-up" data-aos-delay="50">One must be very diligent in trading these stocks. 
-              These are high Momentum stocks and can easily go in the opposite direction
-              with the same momentum. 
-              There are two parts to a successful trade. 
-              All good traders manage these two well</p>
+            <p class="fs-5 mt-3" data-aos="zoom-in-up" data-aos-delay="50">These are stocks for swing trading. </p>
         </div>
         <div class="col-xl-8 mx-auto mb-5">
             <div class="accordion">
@@ -68,11 +57,7 @@
                     </h5>
                     <div class="accordion-collapse collapse" id="collapseOne">
                         <div class="accordion-body">
-                           <p class = "text-dark">Plot  8 emas on your charting software in 5 minute timeframe. 
-                            Look to buy when stock reverses from the moving averages. 
-                            SL should be kept below the ema and previous pivot low in 5 min tf.
-                            Target price should be kept at 2 or 3 times risk. 
-                            Alternatively you could use your own system as long as it has a clear SL identified. 
+                           <p class = "text-dark"> Techniques taught in coaching. Updated only at EOD
                         </div>
                     </div>
                 </div>
@@ -86,11 +71,8 @@
                     <div class="accordion-collapse collapse" id="collapseTwo">
                         <div class="accordion-body text-dark">
                             Leverage should not be used. 
-                            Maximum of 5% of capital should be allocated to one trade. 
-                            Follow this religiously. 
-                            Do not over trade. 
-                            In case 2 trades hit SL, call it a day and come back 
-                            afresh tomorrow. 
+                            Maximum of 10% of capital should be allocated to one trade. 
+                            
                         </div>
                     </div>
                 </div>

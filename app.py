@@ -21,7 +21,7 @@ app = Flask(__name__)
     
 @app.route('/')
 def index():
-    return render_template('base.html', isindex=True)
+    return render_template('dashboard.html', isindex=True)
 
 @app.route("/eod", methods=["GET"])
 def scrape(): 
@@ -140,6 +140,10 @@ def new():
 @app.route('/investment')
 def investment():        
     return(render_template('investment.html',isindex=False))
+
+@app.route('/swing')
+def swing():        
+    return(render_template('swing.html',isindex=False))
 ''' 
 @app.route('/bhav', methods=['GET','POST'])  
 def bhav():

@@ -1,34 +1,50 @@
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
 
  {% block content %} 
+  
   <div class="row"> 
-    <div class="col-sm-3">
+    <div class="col">
       <div class="container">
-        <h1 class="text-center mt-3 mb-3 text-warning"> Investment List</h1>
-        <table class="table table-bordered table-striped">
+      <h1 class="text-center mt-3 mb-3 text-warning">Investment Kings</h1>
+      <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th>Stock Name</th>            
+            <th>Stock Name</th>
+            <th>Trade date </th>
+            <th>current SL</th>
             <!-- Add headers for other attributes -->
           </tr>
         </thead>
         <tbody>
-          
+         
           <tr>
-            <td><a href="https://in.tradingview.com/chart/?symbol=HCLTECH"&target="_blank"  >HCLTECH</a></td>        
+            <td>HCLTECH</td>
+            <td>03-MAR-2023</td>
+            <td>1010</td>
             
+            
+
+          
+            <!-- Add data for other attributes -->
           </tr>
           <tr>
-            <td><a href="https://in.tradingview.com/chart/?symbol=HPL"&target="_blank"  >HPL</a></td>        
+            <td>HPL</td>
+            <td>03-MAR-2023</td>
+            <td>80</td>
             
+            
+
+          
+            <!-- Add data for other attributes -->
           </tr>
           
         </tbody>
       </table>
       </div>
     </div>
-  </div>
-    
+   
+  
+  <div> 
   
 
   <section id="about" class="bg-dark py-5">
