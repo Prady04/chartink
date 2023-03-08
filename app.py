@@ -8,7 +8,7 @@ warnings.filterwarnings('ignore')
 import re
 import perfcounters
 from utils import GetDataFromChartink, send_telegram, send_telegram_img
-import datetime as dt
+from datetime import datetime
 #from bhavutils import process_bhav 
 #from amiutils import import_data 
   
@@ -16,12 +16,17 @@ import datetime as dt
 app = Flask(__name__)
 
 
-
+@app.context_processor
+def inject_template_globals():
+    return {
+        'now': datetime.now(),
+    }
     
     
 @app.route('/')
 def index():
-    return render_template('dashboard.html', isindex=True)
+        
+    return render_template('dashboard.html')
 
 @app.route("/eod", methods=["GET"])
 def scrape(): 
@@ -125,25 +130,28 @@ def new():
     queries = config.new
     stocks = pd.DataFrame()
     key = ""
-    
+    message = ""
     
     #stocks.sort_values(by=['per_chng'], inplace=True)
     print(queries.items())
     try:
         key, stocks = processdata(queries)
     except Exception as e:
+        print(e)
         pass
-    print(stocks)               
+    print(stocks)
+    if stocks.empty:
+        message = 'No stocks found'               
          
-    return(render_template('new.html',pattern = key, stocks = stocks, isindex=False)) 
+    return(render_template('new.html',pattern = key, stocks = stocks, message = message)) 
 
 @app.route('/investment')
 def investment():        
-    return(render_template('investment.html',isindex=False))
+    return(render_template('investment.html'))
 
 @app.route('/swing')
 def swing():        
-    return(render_template('swing.html',isindex=False))
+    return(render_template('swing.html'))
 ''' 
 @app.route('/bhav', methods=['GET','POST'])  
 def bhav():
