@@ -18,44 +18,21 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{% block title %}Momentum Crackers{% endblock %}</title>
+    <title>{% block title %}Trading Lists{% endblock %}</title>
     <meta charset="utf-8" />
     <meta http-equiv="refresh" content="300">
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="76x76"
-      href="{{ url_for('static', filename='assets/img/apple-icon.png')}}"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      href="{{ url_for('static', filename='assets/img/favicon.png')}}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='assets/img/apple-icon.png')}}" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" />
     <script src="{{ url_for('static', filename='assets/js/core/bootstrap.min.js') }}"></script>
-    <link
-      href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800"
-      rel="stylesheet"
-    />
-    <link
-      href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   
+
     <!-- CSS Files -->
-    <link
-      href="{{ url_for('static', filename='assets/css/light-bootstrap-dashboard.css')}}"
-      rel="stylesheet"
-    />
-  </head>
+    <link href="{{ url_for('static', filename='assets/css/light-bootstrap-dashboard.css')}}" rel="stylesheet" />
+</head>
 </head>
 
 <body>
@@ -91,13 +68,13 @@
                             <p>Swing Emperors</p>
                         </a>
                     </li>
-                    <!--<li>
-                        <a class="nav-link" href="./typography.html">
+                    <li>
+                        <a class="nav-link" href="eod">
                             <i class="nc-icon nc-paper-2"></i>
-                            <p>Typography</p>
+                            <p>Candlestick Warriors</p>
                         </a>
-                    </li>-->
-                  <!--  <li>
+                    </li>
+                    <!--  <li>
                         <a class="nav-link" href="./icons.html">
                             <i class="nc-icon nc-atom"></i>
                             <p>Icons</p>
@@ -129,7 +106,8 @@
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#"> prady's stock lists </a>
-                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -142,7 +120,7 @@
                                     <span class="d-lg-none">Home</span>
                                 </a>
                             </li>
-                           <!-- <li class="dropdown nav-item">
+                            <!-- <li class="dropdown nav-item">
                                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                     <i class="nc-icon nc-planet"></i>
                                     <span class="notification">5</span>
@@ -191,48 +169,61 @@
                     </div>
                 </div>
             </nav>
-            
+            {% if isIndex %}
+            <div>
+                <h2> Prady's Stock Lists </h2>
+                <hr><br>
+                <p> Gain access to high momentum stocks, swing trading stocks, investment stocks
+                    that I trade </p>
+
+                <br>
+                <h3> Features </h3>
+                <p> Gain access to my realtime stock lists. <br>
+                    All stocks are carefully picked by me. <br>
+                    Prebuilt Screeners which run in auto mode</p><br>
+
+            </div>
+            {% endif %}
             <!-- End Navbar -->
             <div class="content">
                 <div class="container-fluid">{% block content %} {% endblock %}</div>
-            
-            <div>
-                                 
-               
-     
-        <footer class="bg-dark text-white">
-            <div class="container d-flex justify-content-between pt-3 pb-1">
-                <p>@All rights reserved</p>
-                <p>Designed by <a href="https://vcptrader.com" target="_blank" class="text-info text-decoration-none">Prady</a></p>
-            </div>
-          </footer>
-           
-       
-    </div>
-     
-   
 
-<!--   Core JS Files   -->
-<script src="{{ url_for('static', filename='assets/js/core/jquery.3.2.1.min.js')}}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='assets/js/core/popper.min.js')}}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='assets/js/core/bootstrap.min.js')}}" type="text/javascript"></script>
-<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-switch.js')}}"></script>
+                <div>
 
+                    <footer class="bg-dark text-white">
+                        <div class="container d-flex justify-content-between pt-3 pb-1">
+                            <p>@All rights reserved</p>
+                            <p>Designed by <a href="https://vcptrader.com" target="_blank"
+                                    class="text-info text-decoration-none">Prady</a></p>
+                        </div>
+                    </footer>
 
-<!--  Chartist Plugin  -->
-<script src="{{ url_for('static', filename='assets/js/plugins/chartist.min.js')}}"></script>
-<!--  Notifications Plugin    -->
-<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-notify.js')}}"></script>
-<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
-<script src="{{ url_for('static', filename='assets/js/light-bootstrap-dashboard.js')}}" type="text/javascript"></script>
-<script type="text/javascript">
-    async function gettime() {
-      var d = new Date();
-        document.getElementById("time").innerHTML = d.toLocaleString();
-      }
-   
-    gettime()
-  </script>
+                </div>
+
+                <!--   Core JS Files   -->
+                <script src="{{ url_for('static', filename='assets/js/core/jquery.3.2.1.min.js')}}"
+                    type="text/javascript"></script>
+                <script src="{{ url_for('static', filename='assets/js/core/popper.min.js')}}" type="text/javascript">
+                </script>
+                <script src="{{ url_for('static', filename='assets/js/core/bootstrap.min.js')}}" type="text/javascript">
+                </script>
+                <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+                <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-switch.js')}}"></script>
+
+                <!--  Chartist Plugin  -->
+                <script src="{{ url_for('static', filename='assets/js/plugins/chartist.min.js')}}"></script>
+                <!--  Notifications Plugin    -->
+                <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-notify.js')}}"></script>
+                <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+                <script src="{{ url_for('static', filename='assets/js/light-bootstrap-dashboard.js')}}"
+                    type="text/javascript"></script>
+                <script type="text/javascript">
+                    async function gettime() {
+                        var d = new Date();
+                        document.getElementById("time").innerHTML = d.toLocaleString();
+                    }
+                    gettime()
+                </script>
 </body>
+
 </html>

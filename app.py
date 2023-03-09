@@ -20,13 +20,14 @@ app = Flask(__name__)
 def inject_template_globals():
     return {
         'now': datetime.now(),
+        'isIndex':False,
     }
     
     
 @app.route('/')
 def index():
         
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', isIndex=True)
 
 @app.route("/eod", methods=["GET"])
 def scrape(): 
@@ -51,6 +52,7 @@ def scrape():
             
             data.drop(columns=['sr','name','bsecode'],inplace=True)
             data.rename(columns= {"nsecode":"symbol"},inplace=True)
+            data.rename(columns= {"per_chg":"%change"},inplace=True)
             
             #data["timestap"] = dt.datetime().now().strftime('%H:%M:%S')
             #data = data.style.background_gradient()  
@@ -66,7 +68,7 @@ def scrape():
     scr.report()
     
       
-    return render_template('index.html', dt = dt.datetime.now().strftime("%d-%m-%Y"), dict = dataframes,stocks=stocks, isindex=False)
+    return render_template('index.html', dt = datetime.now().strftime("%d-%m-%Y"), dict = dataframes,stocks=stocks)
 
 def processdata(queries):
     for key, value in queries.items():

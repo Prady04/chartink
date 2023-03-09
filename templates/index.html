@@ -1,18 +1,5 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/img/favicon.png')}}"/>
-  <title>EOD Screener </title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-   
-</head>
-
-  
-<body>
+{% extends 'dashboard.html' %}
+{% block content %}
   <div class = "row">
     <!--<div class = "col-sm-2">  
       <div class="side-nav">
@@ -79,11 +66,50 @@
       {% endfor %}
     </div>
   </div>
-    <!--  </table>-->
-      
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-  crossorigin="anonymous"></script>
-  </body>
-</html>
+  <section id="about" class="bg-light py-5">
+    <div class="container">
+        <div class="text-center py-5">
+            <h2 class="fw-bolder border-bottom border-info border-3 d-inline-block pb-1" data-aos="zoom-in">
+                How to Trade 
+            </h2>
+            <p class="fs-5 mt-3" data-aos="zoom-in-up" data-aos-delay="50">These are stocks for investment. </p>
+        </div>
+        <div class="col-xl-8 mx-auto mb-5">
+            <div class="accordion">
+                <!-- single accordion -->
+                <div class="accordion-item rounded-3 shadow-sm mb-3" data-aos="fade-up">
+                    <h5 class="accordion-header rounded-3 overflow-hidden">
+                        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            Technique
+                        </button>
+                    </h5>
+                    <div class="accordion-collapse collapse" id="collapseOne">
+                        <div class="accordion-body">
+                           <p class = "text-dark"> As per the book Definitive Guide To Candlesticks <p>
+                            <a href = "https://rigi.club/courses/YhCaMZvsQg" target="_blank">Click to buy</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- single accordion -->
+                <div class="accordion-item rounded-3 shadow-sm mb-3" data-aos="fade-up" data-aos-delay="100">
+                    <h5 class="accordion-header rounded-3 overflow-hidden">
+                        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                            Money Management
+                        </button>
+                    </h5>
+                    <div class="accordion-collapse collapse" id="collapseTwo">
+                        <div class="accordion-body text-dark">
+                            Leverage should not be used. 
+                            Maximum of 10% of capital should be allocated to one trade. 
+                            
+                        </div>
+                    </div>
+                </div>
+                
+               
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
