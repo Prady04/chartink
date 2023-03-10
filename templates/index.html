@@ -1,6 +1,22 @@
 {% extends 'dashboard.html' %}
 {% block content %}
-  <div class = "row">
+<div class="container">
+  <div class="mb-3">
+  
+    <button type="submit" class="btn btn-primary" onclick='handlePrint()'><span <i class="fa fa-download" aria-hidden="true"></i> </span></button>
+    <script type="text/javascript">        
+      const handlePrint = () => {
+        var originalContents = document.body.innerHTML;
+        var printReport= document.getElementById('row').innerHTML;
+        document.body.innerHTML = printReport;
+        window.print();
+        document.body.innerHTML = originalContents;
+      }
+   </script>  
+  
+</div>
+</div>
+  <div class = "row" id="row">
     <!--<div class = "col-sm-2">  
       <div class="side-nav">
       <ul class="nav flex-column">
@@ -66,6 +82,7 @@
       {% endfor %}
     </div>
   </div>
+ 
   <section id="about" class="bg-light py-5">
     <div class="container">
         <div class="text-center py-5">

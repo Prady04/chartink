@@ -3884,6 +3884,13 @@ Copyright (c) 2015 Daniel Eden
     top: 0;
     left: 0;
 }
+@media only print {
+    #row {
+      width: auto;
+      height: auto;
+      overflow: visible;
+    }
+ }
 
 @media (min-width: 992px) {
     .navbar-form {

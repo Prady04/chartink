@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, redirect, render_template
+from flask import Flask, request, jsonify, redirect, render_template, make_response
 import requests
 
 import config
@@ -7,14 +7,21 @@ import warnings
 warnings.filterwarnings('ignore')
 import re
 import perfcounters
-from utils import GetDataFromChartink, send_telegram, send_telegram_img
-from datetime import datetime
-#from bhavutils import process_bhav 
-#from amiutils import import_data 
-  
+from utils import GetDataFromChartink
+from datetime import datetime,date
+
+
 
 app = Flask(__name__)
+last_execution = None
 
+
+def get_from_cache():
+    return None, None, None
+
+
+def save_to_cache(today, df, stocks):
+    return 0
 
 @app.context_processor
 def inject_template_globals():
@@ -31,44 +38,32 @@ def index():
 
 @app.route("/eod", methods=["GET"])
 def scrape(): 
-    
+    global last_execution    
+    today = date.today()    
     scr = perfcounters.PerfCounters()
     scr.start('scrape') 
     dataframes = {}
     stocks = []
-    
-    queries = config.eod_queries.items()
-    i=1
-    for key, val in queries:
-      #st = get_stocks(url,driver)
-        data = GetDataFromChartink(val)    
-        send_telegram(key + "\n")
-        
-      
-        if (data.empty == False) and len(data)>1:
-         
+    last_execution,cdataframes, cstocks = get_from_cache()
+    if last_execution == today:
+        return render_template('index.html', dt = datetime.now().strftime("%d-%m-%Y"), dict = cdataframes,stocks=cstocks)
+    else:
+        queries = config.eod_queries.items()        
+        for key, val in queries:        
+            data = GetDataFromChartink(val)        
+            if (data.empty == False) and len(data)>1:                
+                data.drop(columns=['sr','name','bsecode'],inplace=True)
+                data.rename(columns= {"nsecode":"symbol"},inplace=True)
+                data.rename(columns= {"per_chg":"%change"},inplace=True)                
+                stocks.append(data['symbol'].to_string())
+                dataframes[key] = data 
           
-          #print(data)
-            
-            data.drop(columns=['sr','name','bsecode'],inplace=True)
-            data.rename(columns= {"nsecode":"symbol"},inplace=True)
-            data.rename(columns= {"per_chg":"%change"},inplace=True)
-            
-            #data["timestap"] = dt.datetime().now().strftime('%H:%M:%S')
-            #data = data.style.background_gradient()  
-            #dataframe_image.export(data, f'C:\\temp\\{key}.png')
-            stocks.append(data['symbol'].to_string())
-            #data['symbol']= f'<a href="https://in.tradingview.com/chart/ONnfTdXs/?symbol={ym}&target="_blank"" >{ym}</a></td>'
-            send_telegram(data['symbol'].to_string())
-            dataframes[key] = data 
-            
-          
-        
-    scr.stop('scrape')
-    scr.report()
+        scr.stop('scrape')
+        scr.report()
     
-      
-    return render_template('index.html', dt = datetime.now().strftime("%d-%m-%Y"), dict = dataframes,stocks=stocks)
+        save_to_cache(date.today(),dataframes, stocks)
+        resp= render_template('index.html', dt = datetime.now().strftime("%d-%m-%Y"), dict = dataframes,stocks=stocks)
+        return(resp)
 
 def processdata(queries):
     for key, value in queries.items():
@@ -81,6 +76,7 @@ def processdata(queries):
         
     return(key, data)
       
+
 
 @app.route('/bullrun')
 def intraday():
