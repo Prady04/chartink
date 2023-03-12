@@ -148,8 +148,10 @@ def investment():
     return(render_template('investment.html'))
 
 @app.route('/swing')
-def swing():        
-    return(render_template('swing.html'))
+def swing(): 
+    stocks =['ORIENTHOT','MANINFRA','MIRZAINT','CAMPUS','STARHEALTH','APARINDS','ELGIEQUIP','PENIND','INDIANB','SBC','VLSFINANCE','KABRAEXTRU','DATAPATTNS','MOLDTECH']
+    dat = "13-MAR-2023"     
+    return(render_template('swing.html', stocks = stocks, dat=dat))
 ''' 
 @app.route('/bhav', methods=['GET','POST'])  
 def bhav():

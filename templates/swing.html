@@ -7,41 +7,13 @@
     <div class="col">
       <div class="container">
       <h1 class="text-center mt-3 mb-3 text-warning">Swing Emperors</h1>
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Stock Name</th>
-            <th>Trade date </th>
-            <th>current SL</th>
-            <th>Status</th>
-            <!-- Add headers for other attributes -->
-          </tr>
-        </thead>
-        <tbody>
-         
-          <tr>
-            <td>TATAMTRDVR</td>
-            <td>08-MAR-2023</td>
-            <td>1%</td>
-            <td class="bg-success">  2%⬆️ </td>
-          </tr>
-
-          <tr>
-            <td>SDBL</td>
-            <td>08-MAR-2023</td>
-            <td>1%</td>
-            <td class="bg-success">10%⬆️</td>
-          </tr>
-          <tr>
-            <td>FUSION</td>
-            <td>09-MAR-2023</td>
-            <td>1%</td>
-            <td class="bg-primary">⌛</td>
-          </tr>
-          
-          
-        </tbody>
-      </table>
+      
+      <ul class="list-group text-center text-white fw-bold bg-primary"> prady's swing watchlist for {{ dat }}
+      {% for stock in stocks %}
+       <li class="list-group-item text-center">{{ stock }},</li>
+      {% endfor %}
+    </ul>
+      
       </div>
     </div>
    
