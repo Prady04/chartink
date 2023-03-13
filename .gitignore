@@ -4,3 +4,5 @@ __pycache__
 Chartink_Result.xlsm
 static/assets/scss
 .vscode/settings.json
+bhavutils.py 
+amiutils.py 
