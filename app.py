@@ -149,8 +149,8 @@ def investment():
 
 @app.route('/swing')
 def swing(): 
-    stocks =['ZYDUSLIFE','GENCON','DATAPATTNS','UTIAMC','BRITTANIA','JSL']
-    dat = "14-MAR-2023"  
+    stocks =['VLSFINANCE','CAMPUS']
+    dat = "15-MAR-2023"  
     message = "*** market breadth - extreme bearish => prefer reversal trades *****"   
     return(render_template('swing.html', stocks = stocks, dat=dat, message = message))
 ''' 
